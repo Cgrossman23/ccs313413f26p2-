@@ -42,47 +42,35 @@ public class TestPerformance {
     linkedList = null;
   }
 
-  private void testAddRemove(List<Integer> list) { // DRY for add-remove
-    long start_time = System.currentTimeMillis();
-    for (int r = 0; r < REPS; r++) {
-      list.add(0, 77);
-      list.remove(0);
-    }
-    long end_time = System.currentTimeMillis();
-    long duration = end_time - start_time;
-    System.out.println("testAddRemove duration for " + list.getClass().getName() + " = " + duration);
-    System.out.println("testAddRemove duration for " + list.getClass().getName() + " = " + duration / 1000.0);
-  }
-
   @Test
   public void testLinkedListAddRemove() {
-    testAddRemove(linkedList);
+    for (var r = 0; r < REPS; r++) {
+      linkedList.add(0, 77);
+      linkedList.remove(0);
+    }
   }
 
   @Test
   public void testArrayListAddRemove() {
-    testAddRemove(arrayList);
-  }
-
-  private void testAccess(List<Integer> list) { // DRY for access
-    long start_time = System.currentTimeMillis();
-    long sum = 0;
-    for (int r = 0; r < REPS; r++) {
-      sum += list.get(r % SIZE);
+    for (var r = 0; r < REPS; r++) {
+      arrayList.add(0, 77);
+      arrayList.remove(0);
     }
-    long end_time = System.currentTimeMillis();
-    long duration = end_time - start_time;
-    System.out.println("testAccess duration for " + list.getClass().getName() + " = " + duration);
-    System.out.println("testAccess duration for " + list.getClass().getName() + " = " + duration / 1000.0);
   }
 
   @Test
   public void testLinkedListAccess() {
-    testAccess(linkedList);
+    var sum = 0L;
+    for (var r = 0; r < REPS; r++) {
+      sum += linkedList.get(r % SIZE);
+    }
   }
 
   @Test
   public void testArrayListAccess() {
-    testAccess(arrayList);
+    var sum = 0L;
+    for (var r = 0; r < REPS; r++) {
+      sum += arrayList.get(r % SIZE);
+    }
   }
 }
