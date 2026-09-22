@@ -16,11 +16,11 @@ public class TestPerformance {
   // comparing their running times for AddRemove vs. Access? Record those running times in README.txt!
   // TODO (optional) refactor to DRY
   // which of the two lists performs better as the size increases?
-  private final int SIZE = 10;
+  private final int SIZE = 100000;
 
   // TODO choose this value in such a way that you can observe an actual effect
   // for increasing problem sizes
-  private final int REPS = 1000000;
+  private final int REPS = 1000;
 
   private List<Integer> arrayList;
 
@@ -28,12 +28,14 @@ public class TestPerformance {
 
   @BeforeEach
   public void setUp() throws Exception {
+
     arrayList = new ArrayList<Integer>(SIZE);
     linkedList = new LinkedList<Integer>();
     for (var i = 0; i < SIZE; i++) {
       arrayList.add(i);
       linkedList.add(i);
     }
+
   }
 
   @AfterEach
@@ -44,33 +46,48 @@ public class TestPerformance {
 
   @Test
   public void testLinkedListAddRemove() {
+    long startTime = System.nanoTime();
     for (var r = 0; r < REPS; r++) {
       linkedList.add(0, 77);
       linkedList.remove(0);
     }
+    long endTime = System.nanoTime();
+    System.out.println("LinkedList Add Remove Time: "+ (endTime-startTime)/1_000_000.0 + " milliseconds");
   }
 
   @Test
   public void testArrayListAddRemove() {
+    long startTime = System.nanoTime();
     for (var r = 0; r < REPS; r++) {
       arrayList.add(0, 77);
       arrayList.remove(0);
+
     }
+    long endTime = System.nanoTime();
+    System.out.println("ArrayList Add Remove Time: "+ (endTime-startTime)/1_000_000.0 + " milliseconds");
   }
 
   @Test
   public void testLinkedListAccess() {
+    long startTime = System.nanoTime();
     var sum = 0L;
     for (var r = 0; r < REPS; r++) {
       sum += linkedList.get(r % SIZE);
     }
+    long endTime = System.nanoTime();
+    System.out.println("Linked List Access Time: "+ (endTime-startTime)/1_000_000.0 + " milliseconds");
   }
 
   @Test
   public void testArrayListAccess() {
+    long startTime = System.nanoTime();
     var sum = 0L;
     for (var r = 0; r < REPS; r++) {
+
       sum += arrayList.get(r % SIZE);
     }
+    long endTime = System.nanoTime();
+    System.out.println("Array List Access Time: "+ (endTime-startTime)/1_000_000.0 + " milliseconds");
   }
+
 }
